@@ -98,6 +98,33 @@ struct no *removerDoFim(struct no *L, int *v){
     return L;
 }//Fim removerDoFim()
 
+int comprimentoLista(struct no *L){
+
+    struct no *p;
+    int cont=0;
+
+    p = L;
+    while (p!=NULL){
+        cont++;
+        p = p->prox;
+    }
+    return cont;
+}//Fim comprimentoLista()
+
+int existe(struct no *L, int v){
+
+    struct no *p;
+    int achou=0;
+
+    p = L;
+    while ((p!=NULL)&&(!achou)){
+        if (p->info==v) //Encontrou o noh que tem o valor procurado
+            achou = 1;
+        p = p->prox;
+    }
+    return achou;
+}//Fim existe()
+
 int main() {
 struct no *Lista;
 int op, val;
@@ -112,6 +139,8 @@ do{
     printf("\n*3) Imprimir a Lista                  *");
     printf("\n*4) Remover do Inicio da Lista        *");
     printf("\n*5) Remover do Fim da Lista           *");
+    printf("\n*6) Comprimento da Lista              *");
+    printf("\n*7) Localizar valor na Lista          *");
     printf("\n*0) Sair                              *");
     printf("\n*                                     *");
     printf("\n*Opcao->                              *");
@@ -148,7 +177,7 @@ do{
             printf("\nInformacao removida: %i", val);
             system("pause");
         } break;
-            
+
     case 5: //Remover o noh do início da lista, retornando a informação do noh
         if (Lista==NULL){
             printf("\nLista vazia! Impossivel remover!");
@@ -158,6 +187,21 @@ do{
             printf("\nInformacao removida: %i", val);
             system("pause");
         } break;
+
+    case 6: //Comprimento da Lista - Nro. de nohs da Lista
+        printf("\nComprimento da Lista: %i", comprimentoLista(Lista));
+        system("pause");
+        break;
+
+    case 7: //Localizar valor na lista
+        printf("\nDigite o valor para localizar: ");
+        fflush(stdin); scanf("%i", &val);
+        if (existe(Lista, val))
+            printf("\nO valor %i existe na lista", val);
+        else
+            printf("\nO valor %i nao existe na lista", val);
+        system("pause");
+        break;
     }
 }while (op!=0);
     return 0;
