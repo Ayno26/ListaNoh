@@ -9,46 +9,44 @@ struct no {
 
 struct no * inserirNoInicio(struct no *L, int v){
 /*
-1∫ Alocar espaÁo de memÛria p/ o novo noh (malloc);
-2∫ Colocar a informaÁ„o no novo noh (v);
-3∫ Fazer o encadeamento do novo noh no inÌcio da lista, ou seja
-atribuir ao campo prox do novo noh, o endereÁo do 1∫ noh da lista;
-4∫ Fazer a lista apontar para o novo noh que passa a ser o 1∫;
+1¬∫ Alocar espa√ßo de mem√≥ria p/ o novo noh (malloc);
+2¬∫ Colocar a informa√ß√£o no novo noh (v);
+3¬∫ Fazer o encadeamento do novo noh no in√≠cio da lista, ou seja
+atribuir ao campo prox do novo noh, o endere√ßo do 1¬∫ noh da lista;
+4¬∫ Fazer a lista apontar para o novo noh que passa a ser o 1¬∫;
 */
     struct no *p;
 
-    //Aloca espaÁo de memÛria para o novo noh
+    //Aloca espa√ßo de mem√≥ria para o novo noh
     p = (struct no *) malloc(sizeof(struct no));
-    p->info = v; //Coloca a informaÁ„o no novo noh
-    p->prox = L; //Faz o encadeamento do novo noh no inÌcio da lista
+    p->info = v; //Coloca a informa√ß√£o no novo noh
+    p->prox = L; //Faz o encadeamento do novo noh no in√≠cio da lista
     L = p; //Faz a lista apontar para o novo noh, o qual passa a ser o primeiro
-    return L; //Retorna o endereÁo do novo noh para a atualizar a lista no prog. principal
-
+    return L; //Retorna o endere√ßo do novo noh para a atualizar a lista no prog. principal
 }//Fim inserirNoInicio()
 
 struct no * inserirNoFim(struct no *L, int v){
 /*
-1∫ Alocar espaÁo na memÛria
-2∫ Colocar a informaÁ„o no novo noh (colocar NULL no campo prox)
-3∫ Localizar o ˙ltimo noh da lista
-4∫ Fazer o encadeamento do novo noh no fim da lista
+1¬∫ Alocar espa√ßo na mem√≥ria
+2¬∫ Colocar a informa√ß√£o no novo noh (colocar NULL no campo prox)
+3¬∫ Localizar o √∫ltimo noh da lista
+4¬∫ Fazer o encadeamento do novo noh no fim da lista
 */
     struct no *p, *n;
 
-    //Aloca espaÁo de memÛria para o novo noh
+    //Aloca espa√ßo de mem√≥ria para o novo noh
     n = (struct no *) malloc(sizeof(struct no));
-    n->info = v; //Coloca a informaÁ„o no novo noh
-    n->prox = NULL; //Como sera o ˙ltimo noh, seu prox È NULL
+    n->info = v; //Coloca a informa√ß√£o no novo noh
+    n->prox = NULL; //Como sera o √∫ltimo noh, seu prox √© NULL
     if (L==NULL){
         return n; //tratamento de Lista vazia
     }
-    //Localizar o ˙ltimo noh da Lista
+    //Localizar o √∫ltimo noh da Lista
     p = L; //Aponta p para o primeiro
     while(p->prox != NULL)
-        p = p->prox; //Anda o p atÈ o ˙ltimo noh
-    p->prox = n; //Faz o encadeamento do ˙ltimo noh com o novo noh
+        p = p->prox; //Anda o p at√© o √∫ltimo noh
+    p->prox = n; //Faz o encadeamento do √∫ltimo noh com o novo noh
     return L;
-
 }//Fim inserirNoInicio()
 
 void imprimirLista(struct no *L){
@@ -66,19 +64,39 @@ void imprimirLista(struct no *L){
         p = p->prox;
     }
     system("pause");
-}//Fim imprimir lista()
+}//Fim imprimirLista()
 
 struct no *removerDoInicio(struct no *L, int *v){
 
     struct no *p;
 
-    p = L; //Aponta p para o primeiro noh, o qual ser· removido
-    *v = p->info; //Coloca em val (atravÈs de v) a informaÁ„o do noh removido
+    p = L; //Aponta p para o primeiro noh, o qual ser√° removido
+    *v = p->info; //Coloca em val (atrav√©s de v) a informa√ß√£o do noh removido
     L = p->prox; //Aponta L para o segundo noh, o qual passa a ser o primeiro
-    free(p); //Libera espaÁo de memÛria usada pelo noh removido
+    free(p); //Libera espa√ßo de mem√≥ria usada pelo noh removido
     return L;
-
 };//Fim removerDoInicio()
+
+struct no *removerDoFim(struct no *L, int *v){
+
+    struct no *p, *q;
+
+    p = L;
+    while (p->prox != NULL) //Posicionar o p no √∫ltimo noh
+        p = p->prox;
+
+    if (L->prox!=NULL){ //Lista tem mais de 1 noh
+        q = L;
+        while (q->prox != p) //Posiciona q no noh anterior ao p
+            q = q->prox;
+        q->prox = NULL; //Finaliza a Lista do penultimo noh
+    }else{ //Lista s√≥ tem 1 noh
+        L = NULL;
+    }
+    *v = p->info; //Pega a informa√ß√£o no noh que ser√° removido
+    free(p); //Libera memoria do noh removido
+    return L;
+}//Fim removerDoFim()
 
 int main() {
 struct no *Lista;
@@ -93,6 +111,7 @@ do{
     printf("\n*2) Inserir no Fim da Lista           *");
     printf("\n*3) Imprimir a Lista                  *");
     printf("\n*4) Remover do Inicio da Lista        *");
+    printf("\n*5) Remover do Fim da Lista           *");
     printf("\n*0) Sair                              *");
     printf("\n*                                     *");
     printf("\n*Opcao->                              *");
@@ -120,7 +139,7 @@ do{
         imprimirLista(Lista);
         break;
 
-    case 4: //Remover o noh do inÌcio da lista, retornando a informaÁ„o do noh
+    case 4: //Remover o noh do in√≠cio da lista, retornando a informa√ß√£o do noh
         if (Lista==NULL){
             printf("\nLista vazia! Impossivel remover!");
             system("pause");
@@ -128,8 +147,16 @@ do{
             Lista = removerDoInicio(Lista, &val);
             printf("\nInformacao removida: %i", val);
             system("pause");
-            break;
-        }
+        } break;
+    case 5: //Remover o noh do in√≠cio da lista, retornando a informa√ß√£o do noh
+        if (Lista==NULL){
+            printf("\nLista vazia! Impossivel remover!");
+            system("pause");
+        }else{
+            Lista = removerDoFim(Lista, &val);
+            printf("\nInformacao removida: %i", val);
+            system("pause");
+        } break;
     }
 }while (op!=0);
     return 0;
