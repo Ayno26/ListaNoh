@@ -148,6 +148,7 @@ do{
             printf("\nInformacao removida: %i", val);
             system("pause");
         } break;
+            
     case 5: //Remover o noh do início da lista, retornando a informação do noh
         if (Lista==NULL){
             printf("\nLista vazia! Impossivel remover!");
