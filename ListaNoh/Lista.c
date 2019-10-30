@@ -125,6 +125,32 @@ int existe(struct no *L, int v){
     return achou;
 }//Fim existe()
 
+struct no *localizaRemove(struct no *L, int v){
+
+    struct no *p, *q;
+
+    if(!existe(L, v)){
+        printf("\nO valor solicitado NAO existe na Lista");
+        return L;
+    }
+
+    p=L;
+    while(p->info!=v) //Posicionar p no noh que contém o valor
+        p = p->prox; //Primeira ocorrencia do valor procurado
+
+    if(p==L){ //O noh a ser removido é o primeiro da Lista
+        L = p->prox; //Faz l apontar para o segundo noh, que sera o primeiro
+    }else{ //O noh a ser removido é do meio ou fim da lista
+        q=L;
+        while(q->prox!=p) //Posiciona q no noh anterior ao p
+            q = q->prox;
+        q->prox = p->prox; //Faz o encadeamento
+    }
+    free(p);
+    printf("\nNoh removido com sucesso!");
+    return L;
+}//Fim localizaRemove
+
 int main() {
 struct no *Lista;
 int op, val;
@@ -141,6 +167,7 @@ do{
     printf("\n*5) Remover do Fim da Lista           *");
     printf("\n*6) Comprimento da Lista              *");
     printf("\n*7) Localizar valor na Lista          *");
+    printf("\n*8) Localizar e remover da Lista      *");
     printf("\n*0) Sair                              *");
     printf("\n*                                     *");
     printf("\n*Opcao->                              *");
@@ -201,6 +228,12 @@ do{
         else
             printf("\nO valor %i nao existe na lista", val);
         system("pause");
+        break;
+
+    case 8: //Remover o noh que contém a primeira ocorrência de uma determinada informação
+        printf("\nDigite o valor a ser localizado e removido");
+        fflush(stdin); scanf("%i", &val);
+        Lista = localizaRemove(Lista, val);
         break;
     }
 }while (op!=0);
