@@ -234,6 +234,7 @@ do{
         printf("\nDigite o valor a ser localizado e removido");
         fflush(stdin); scanf("%i", &val);
         Lista = localizaRemove(Lista, val);
+        system("pause");
         break;
     }
 }while (op!=0);
